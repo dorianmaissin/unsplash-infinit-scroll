@@ -1,4 +1,5 @@
 let jsonData 
+let checkloading
 const key = "79DWOl8fX6_GjcUXEAjil5fuZLFH5hn9Lr7MyTd0Epc"
 async function getPhotos() {
     const key = "79DWOl8fX6_GjcUXEAjil5fuZLFH5hn9Lr7MyTd0Epc"
@@ -14,6 +15,7 @@ async function getPhotos() {
 }
 
 const applyPhotos = () => {
+    checkloading = false
     getPhotos().then(() => {
         const galleryContainer = document.querySelector("#gallery-container");
         for(let i = 0; i < jsonData.length; i++) {
@@ -30,13 +32,14 @@ const applyPhotos = () => {
             a.setAttribute("target", "_blank");
             a.appendChild(div);
             galleryContainer.appendChild(a);
-        };    
+        }; 
+        checkloading = true   
     }) 
 }
 applyPhotos()
 
 window.addEventListener('scroll', function() {
-    if(window.innerHeight + window.scrollY >= document.body.offsetHeight){
+    if(window.innerHeight + window.scrollY >= document.body.offsetHeight - 1500 && checkloading === true){
         applyPhotos()
     }
 })
